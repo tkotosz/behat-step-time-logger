@@ -1,6 +1,6 @@
 <?php
 
-namespace Bex\Behat\StepTimeLogger\Service;
+namespace Bex\Behat\StepTimeLoggerExtension\Service;
 
 class StepTimeLogger
 {

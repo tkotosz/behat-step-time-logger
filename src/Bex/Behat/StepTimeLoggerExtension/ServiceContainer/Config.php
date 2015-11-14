@@ -1,13 +1,13 @@
 <?php
 
-namespace Bex\Behat\StepTimeLogger\ServiceContainer;
+namespace Bex\Behat\StepTimeLoggerExtension\ServiceContainer;
 
-use Bex\Behat\StepTimeLogger\Service\OutputPrinterInterface;
+use Bex\Behat\StepTimeLoggerExtension\Service\OutputPrinter\OutputPrinterInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class Config
 {
-    const CONFIG_KEY_ENABLED = 'enabled';
+    const CONFIG_KEY_ENABLED_ALWAYS = 'enabled_always';
     const CONFIG_KEY_OUTPUT_DIRECTORY = 'output_directory';
     const CONFIG_KEY_FORMAT = 'format';
 
@@ -38,16 +38,18 @@ class Config
     public function __construct(ContainerBuilder $container, $config)
     {
         $this->container = $container;
-        $this->enabled = $config[self::CONFIG_KEY_ENABLED];
+        $this->enabled = $config[self::CONFIG_KEY_ENABLED_ALWAYS];
         $this->outputDirectory = $config[self::CONFIG_KEY_OUTPUT_DIRECTORY];
         $this->format = $config[self::CONFIG_KEY_FORMAT];
         
     }
 
-    /**
-     * @return boolean
-     */
-    public function isExtensionEnabled()
+    public function enableLogging()
+    {
+        $this->enabled = true;
+    }
+
+    public function isEnabled()
     {
         return $this->enabled;
     }
@@ -63,10 +65,8 @@ class Config
     /**
      * @return void
      */
-    public function configureOutputPrinter()
+    public function getOutputPrinter()
     {
-        $outputPrinter = $this->container->get(OutputPrinterInterface::SERVICE_ID_PREFIX . '.' . $this->format);
-        $outputPrinter->configure($this);
-        $container->setDefinition('bex.step_time_logger_extension.output_printer.current', $outputPrinter);
+        return $this->container->get(OutputPrinterInterface::SERVICE_ID_PREFIX . '.' . $this->format);
     }
 }

@@ -1,9 +1,10 @@
 <?php
 
-namespace Bex\Behat\StepTimeLogger\Service\OutputPrinter;
+namespace Bex\Behat\StepTimeLoggerExtension\Service\OutputPrinter;
 
-use Bex\Behat\StepTimeLogger\ServiceContainer\Config;
+use Bex\Behat\StepTimeLoggerExtension\ServiceContainer\Config;
 use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Output\ConsoleOutput;
 
 class Console implements OutputPrinterInterface
 {
@@ -23,8 +24,8 @@ class Console implements OutputPrinterInterface
      */
     public function printLogs(array $calledCounts, array $avgTimes)
     {
-        $table = new Table(new Behat\Testwork\Output\Printer\ConsoleOutputPrinter());
-        $table->setHeaders(array('Execution Time', 'Called count', 'Step name'));
+        $table = new Table(new ConsoleOutput());
+        $table->setHeaders(array('Average execution Time', 'Called count', 'Step name'));
         foreach ($avgTimes as $stepName => $time) {
             $table->addRow([$time, $calledCounts[$stepName], $stepName]);
         }

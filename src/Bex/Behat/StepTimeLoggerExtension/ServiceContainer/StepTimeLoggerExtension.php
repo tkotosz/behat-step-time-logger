@@ -1,7 +1,8 @@
 <?php
 
-namespace Bex\Behat\StepTimeLogger\ServiceContainer;
+namespace Bex\Behat\StepTimeLoggerExtension\ServiceContainer;
 
+use Behat\Testwork\ServiceContainer\Extension;
 use Behat\Testwork\ServiceContainer\ExtensionManager;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\FileLocator;
@@ -15,7 +16,7 @@ use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
  */
 class StepTimeLoggerExtension implements Extension
 {
-    const CONFIG_KEY = 'behat-step-time-logger';
+    const CONFIG_KEY = 'steptimelogger';
 
      /**
      * {@inheritdoc}
@@ -48,13 +49,13 @@ class StepTimeLoggerExtension implements Extension
     {
         $builder
             ->children()
-                ->booleanNode('enabled')
-                    ->defaultTrue()
+                ->booleanNode('enabled_always')
+                    ->defaultFalse()
                 ->end()
                 ->scalarNode('output_directory')
                     ->defaultValue(sys_get_temp_dir() . DIRECTORY_SEPARATOR . self::CONFIG_KEY)
                 ->end()
-                ->enumNode('fromat')
+                ->enumNode('format')
                     ->values(['console', 'csv'])
                     ->defaultValue('console')
                 ->end()
@@ -67,11 +68,9 @@ class StepTimeLoggerExtension implements Extension
     public function load(ContainerBuilder $container, array $config)
     {
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/config'));
-        $extensionConfig = new Config($container, $config);
+        $loader->load('services.xml');
 
-        if ($extensionConfig->isExtensionEnabled()) {
-            $loader->load('services.xml');
-            $extensionConfig->configureOutputPrinter();
-        }
+        $extensionConfig = new Config($container, $config);
+        $container->set('bex.step_time_logger_extension.config', $extensionConfig);
     }
 }

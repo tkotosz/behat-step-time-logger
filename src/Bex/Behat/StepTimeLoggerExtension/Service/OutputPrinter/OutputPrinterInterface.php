@@ -1,8 +1,8 @@
 <?php
 
-namespace Bex\Behat\StepTimeLogger\Service\OutputPrinter;
+namespace Bex\Behat\StepTimeLoggerExtension\Service\OutputPrinter;
 
-use Bex\Behat\StepTimeLogger\ServiceContainer\Config;
+use Bex\Behat\StepTimeLoggerExtension\ServiceContainer\Config;
 
 interface OutputPrinterInterface
 {

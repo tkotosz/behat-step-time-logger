@@ -1,14 +1,16 @@
 <?php
 
-namespace Bex\Behat\StepTimeLogger\Listener;
+namespace Bex\Behat\StepTimeLoggerExtension\Listener;
 
 use Behat\Behat\EventDispatcher\Event\AfterStepTested;
 use Behat\Behat\EventDispatcher\Event\BeforeStepTested;
 use Behat\Behat\EventDispatcher\Event\StepTested;
 use Behat\Testwork\EventDispatcher\Event\AfterSuiteTested;
 use Behat\Testwork\EventDispatcher\Event\SuiteTested;
-use Bex\Behat\StepTimeLogger\Service\OutputPrinter\OutputPrinterInterface;
-use Bex\Behat\StepTimeLogger\Service\StepTimeLogger;
+use Bex\Behat\StepTimeLoggerExtension\ServiceContainer\Config;
+use Bex\Behat\StepTimeLoggerExtension\Service\OutputPrinter\OutputPrinterInterface;
+use Bex\Behat\StepTimeLoggerExtension\Service\StepTimeLogger;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final class StepTimeLoggerListener implements EventSubscriberInterface
 {
@@ -18,18 +20,13 @@ final class StepTimeLoggerListener implements EventSubscriberInterface
     private $stepTimeLogger;
 
     /**
-     * @var OutputPrinterInterface
-     */
-    private $outputPrinter;
-
-    /**
      * @param StepTimeLogger         $stepTimeLogger
      * @param OutputPrinterInterface $outputPrinter
      */
-    public function __construct(StepTimeLogger $stepTimeLogger, OutputPrinterInterface $outputPrinter)
+    public function __construct(Config $config, StepTimeLogger $stepTimeLogger)
     {
+        $this->config = $config;
         $this->stepTimeLogger = $stepTimeLogger;
-        $this->outputPrinter = $outputPrinter;
     }
 
     /**
@@ -49,7 +46,9 @@ final class StepTimeLoggerListener implements EventSubscriberInterface
      */
     public function stepStarted(BeforeStepTested $event)
     {
-        $this->stepTimeLogger->logStepStarted();
+        if ($this->config->isEnabled()) {
+            $this->stepTimeLogger->logStepStarted($event->getStep()->getText());
+        }
     }
 
     /**
@@ -57,7 +56,9 @@ final class StepTimeLoggerListener implements EventSubscriberInterface
      */
     public function stepFinished(AfterStepTested $event)
     {
-        $this->stepTimeLogger->logStepFinished($event->getStep()->getText());
+        if ($this->config->isEnabled()) {
+            $this->stepTimeLogger->logStepFinished($event->getStep()->getText());
+        }
     }
 
     /**
@@ -65,10 +66,12 @@ final class StepTimeLoggerListener implements EventSubscriberInterface
      */
     public function suiteFinished(AfterSuiteTested $event)
     {
-        $this->outputPrinter->printLogs(
-            $this->stepTimeLogger->getCalledCounts(),
-            $this->stepTimeLogger->getAvegrageExecutionTimes()
-        );
-        $this->stepTimeLogger->clearLogs();
+        if ($this->config->isEnabled()) {
+            $this->config->getOutputPrinter()->printLogs(
+                $this->stepTimeLogger->getCalledCounts(),
+                $this->stepTimeLogger->getAvegrageExecutionTimes()
+            );
+            $this->stepTimeLogger->clearLogs();
+        }
     }
 }
