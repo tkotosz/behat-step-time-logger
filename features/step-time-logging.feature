@@ -8,9 +8,10 @@ Feature: Logging step times
       """
       Feature: Multi-step feature
       Scenario:
-        Given I have a step which runs for "0.25" s
-        When I have a step which runs for "0.5" s
-        Then I have a step which runs for "0.1" s
+        Given I am a developer
+        When I have a step which runs for "1" s
+        And I have a step which runs for "0.5" s
+        Then I have a step which runs for "0" s
       """
     And I have the context:
       """
@@ -20,11 +21,18 @@ Feature: Logging step times
       class FeatureContext implements Context, SnippetAcceptingContext
       {
           /**
+           * @Given I am a developer
+           */
+          function iAmADeveloper()
+          {
+              return true;
+          }
+          /**
            * @Given I have a step which runs for :time s
            */
           function iHaveAStepWhichRunsFor($time)
           {
-              sleep($time);
+              sleep((float)$time);
           }
       }
       """
