@@ -9,7 +9,7 @@ class Config
 {
     const CONFIG_KEY_ENABLED_ALWAYS = 'enabled_always';
     const CONFIG_KEY_OUTPUT_DIRECTORY = 'output_directory';
-    const CONFIG_KEY_FORMAT = 'format';
+    const CONFIG_KEY_FORMAT = 'output';
 
     /**
      * @var ContainerBuilder
@@ -27,9 +27,9 @@ class Config
     private $outputDirectory;
 
     /**
-     * @var string
+     * @var array
      */
-    private $format;
+    private $outputFormats;
 
     /**
      * @param ContainerBuilder $container
@@ -40,15 +40,22 @@ class Config
         $this->container = $container;
         $this->enabled = $config[self::CONFIG_KEY_ENABLED_ALWAYS];
         $this->outputDirectory = $config[self::CONFIG_KEY_OUTPUT_DIRECTORY];
-        $this->format = $config[self::CONFIG_KEY_FORMAT];
-        
+        $this->outputFormats = $config[self::CONFIG_KEY_FORMAT];
     }
 
+    /**
+     * Activate the extension
+     * 
+     * @return void
+     */
     public function enableLogging()
     {
         $this->enabled = true;
     }
 
+    /**
+     * @return boolean
+     */
     public function isEnabled()
     {
         return $this->enabled;
@@ -63,10 +70,18 @@ class Config
     }
 
     /**
-     * @return void
+     * @return OutputPrinterInterface[]
      */
-    public function getOutputPrinter()
+    public function getOutputPrinters()
     {
-        return $this->container->get(OutputPrinterInterface::SERVICE_ID_PREFIX . '.' . $this->format);
+        $printers = [];
+
+        foreach ($this->outputFormats as $format) {
+            $printer = $this->container->get(OutputPrinterInterface::SERVICE_ID_PREFIX . '.' . $format);
+            $printer->configure($this);
+            $printers[] = $printer;
+        }
+
+        return $printers;
     }
 }

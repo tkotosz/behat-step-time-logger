@@ -25,7 +25,7 @@ class Console implements OutputPrinterInterface
     public function printLogs(array $calledCounts, array $avgTimes)
     {
         $table = new Table(new ConsoleOutput());
-        $table->setHeaders(array('Average execution Time', 'Called count', 'Step name'));
+        $table->setHeaders(['Average execution Time', 'Called count', 'Step name']);
         foreach ($avgTimes as $stepName => $time) {
             $table->addRow([$time, $calledCounts[$stepName], $stepName]);
         }

@@ -55,9 +55,15 @@ class StepTimeLoggerExtension implements Extension
                 ->scalarNode('output_directory')
                     ->defaultValue(sys_get_temp_dir() . DIRECTORY_SEPARATOR . self::CONFIG_KEY)
                 ->end()
-                ->enumNode('format')
-                    ->values(['console', 'csv'])
-                    ->defaultValue('console')
+                ->arrayNode('output')
+                    ->defaultValue(['console'])
+                    ->beforeNormalization()
+                        ->always($this->getOutputTypeInitializer())
+                    ->end()
+                    ->validate()
+                        ->always($this->getOutputTypeValidator())
+                    ->end()
+                    ->prototype('scalar')->end()
                 ->end()
             ->end();
     }
@@ -72,5 +78,34 @@ class StepTimeLoggerExtension implements Extension
 
         $extensionConfig = new Config($container, $config);
         $container->set('bex.step_time_logger_extension.config', $extensionConfig);
+    }
+
+    /**
+     * @return \Closure
+     */
+    private function getOutputTypeInitializer()
+    {
+        return function ($value) {
+            $value = empty($value) ? ['console'] : $value;
+            return is_array($value) ? $value : [$value];
+        };
+    }
+
+    /**
+     * @return \Closure
+     */
+    private function getOutputTypeValidator()
+    {
+        return function ($value) {
+            $allowed = ['console', 'csv'];
+            $invalid = array_diff($value, $allowed);
+            
+            if (!empty($invalid)) {
+                $message = 'Invalid output types: %s. Allowed types: %s';
+                throw new \InvalidArgumentException(sprintf($message, join(',', $invalid), join(',', $allowed)));
+            }
+
+            return $value;
+        };
     }
 }
