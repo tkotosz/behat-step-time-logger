@@ -11,7 +11,7 @@
         <service id="bex.step_time_logger_extension.step_time_logger" class="Bex\Behat\StepTimeLoggerExtension\Service\StepTimeLogger" />
 
         <service id="bex.step_time_logger_extension.cli_controller" class="Bex\Behat\StepTimeLoggerExtension\Cli\StepTimeLoggerController">
-            <tag name="cli.controller" />
+            <tag name="cli.controller" priority="1"/>
             <argument type="service" id="bex.step_time_logger_extension.config" />
         </service>
 

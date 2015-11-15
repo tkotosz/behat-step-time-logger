@@ -21,4 +21,4 @@ install:
 
 script:
   - bin/phpspec run --no-interaction --format=pretty
-  - bin/behat --no-interaction --no-snippets --stop-on-failure --format=pretty
+  - bin/behat --no-interaction --no-snippets --stop-on-failure --format=pretty --log-step-times

@@ -66,9 +66,9 @@ final class StepTimeLoggerListener implements EventSubscriberInterface
     }
 
     /**
-     * @param AfterSuiteTested $event
+     * @return void
      */
-    public function suiteFinished(AfterSuiteTested $event)
+    public function suiteFinished()
     {
         if ($this->config->isEnabled()) {
             $calledCounts = $this->stepTimeLogger->getCalledCounts();
