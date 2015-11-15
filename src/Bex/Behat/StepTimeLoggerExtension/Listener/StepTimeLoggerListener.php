@@ -42,7 +42,7 @@ final class StepTimeLoggerListener implements EventSubscriberInterface
     }
 
     /**
-     * @param  BeforeStepTested $event
+     * @param BeforeStepTested $event
      */
     public function stepStarted(BeforeStepTested $event)
     {
@@ -52,7 +52,7 @@ final class StepTimeLoggerListener implements EventSubscriberInterface
     }
 
     /**
-     * @param  AfterStepTested $event
+     * @param AfterStepTested $event
      */
     public function stepFinished(AfterStepTested $event)
     {
@@ -62,7 +62,7 @@ final class StepTimeLoggerListener implements EventSubscriberInterface
     }
 
     /**
-     * @param  AfterSuiteTested $event
+     * @param AfterSuiteTested $event
      */
     public function suiteFinished(AfterSuiteTested $event)
     {

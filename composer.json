@@ -20,10 +20,16 @@
     },
     "require-dev": {
         "phpspec/phpspec": "2.4.0-alpha2",
-        "bex/behat-test-runner": "*",
+        "bex/behat-test-runner": "dev-feature/add-parameter-support-for-secondary-behat",
         "jakoch/phantomjs-installer": "^1.9.8",
         "behat/mink-selenium2-driver": "^1.3.0"
     },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/elvetemedve/behat-test-runner"
+        }
+    ],
     "config": {
         "bin-dir": "bin"
     },

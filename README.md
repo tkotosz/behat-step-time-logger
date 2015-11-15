@@ -1,6 +1,11 @@
 Behat-StepTimeLoggerExtension
 =========================
-
+[![License](https://poser.pugx.org/bex/behat-step-time-logger/license)](https://packagist.org/packages/bex/behat-step-time-logger)
+[![Latest Stable Version](https://poser.pugx.org/bex/behat-step-time-logger/version)](https://packagist.org/packages/bex/behat-step-time-logger)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/tkotosz/behat-step-time-logger/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/tkotosz/behat-step-time-logger/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/tkotosz/behat-step-time-logger/badges/build.png?b=master)](https://scrutinizer-ci.com/g/tkotosz/behat-step-time-logger/build-status/master)
+[![Build Status](https://travis-ci.org/tkotosz/behat-step-time-logger.svg?branch=master)](https://travis-ci.org/tkotosz/behat-step-time-logger)
+[![HHVM Status](http://hhvm.h4cc.de/badge/bex/behat-step-time-logger.svg?style=flat)](http://hhvm.h4cc.de/package/bex/behat-step-time-logger)
 
 Behat-StepTimeLoggerExtension helps you find slow behat scenario steps by logging the step times.
 
