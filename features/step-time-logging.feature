@@ -36,7 +36,7 @@ Feature: Logging step times
         extensions:
           Bex\Behat\StepTimeLoggerExtension: ~
       """
-    When I run Behat with "--log-step-times" parameter
+    When I run Behat with "--no-colors --log-step-times" parameter
     Then I should see the step times on the console
 
   Scenario: Print debug times to csv
@@ -47,7 +47,7 @@ Feature: Logging step times
           Bex\Behat\StepTimeLoggerExtension:
             output: csv
       """
-    When I run Behat with "--log-step-times" parameter
+    When I run Behat with "--no-colors --log-step-times" parameter
     Then I should see the message "Step time log has been saved. Open at %temp-dir%/steptimelogger/"
 
   Scenario: Print debug times to csv to the configured folder
@@ -59,7 +59,7 @@ Feature: Logging step times
             output: csv
             output_directory: /tmp/testdirectory
       """
-    When I run Behat with "--log-step-times" parameter
+    When I run Behat with "--no-colors --log-step-times" parameter
     Then I should see the message "Step time log has been saved. Open at /tmp/testdirectory"
 
   Scenario: Print debug times to csv and to console as well
@@ -70,7 +70,7 @@ Feature: Logging step times
           Bex\Behat\StepTimeLoggerExtension:
             output: [console, csv]
       """
-    When I run Behat with "--log-step-times" parameter
+    When I run Behat with "--no-colors --log-step-times" parameter
     Then I should see the step times on the console
     And I should see the message "Step time log has been saved. Open at %temp-dir%/steptimelogger/"
 
