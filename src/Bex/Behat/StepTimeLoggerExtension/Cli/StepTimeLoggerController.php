@@ -11,6 +11,14 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class StepTimeLoggerController implements Controller
 {
+    /**
+     * @var Config
+     */
+    private $config;
+
+    /**
+     * @param Config $config
+     */
     public function __construct(Config $config)
     {
         $this->config = $config;    

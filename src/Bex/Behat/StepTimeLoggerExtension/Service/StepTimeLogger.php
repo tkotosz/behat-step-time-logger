@@ -12,6 +12,11 @@ class StepTimeLogger
     /**
      * @var array
      */
+    private $calledSteps = [];
+
+    /**
+     * @var array
+     */
     private $executionTimes = [];
 
     /**
@@ -36,6 +41,7 @@ class StepTimeLogger
      */
     public function clearLogs()
     {
+        $this->calledSteps = [];
         $this->executionTimes = [];
     }
 

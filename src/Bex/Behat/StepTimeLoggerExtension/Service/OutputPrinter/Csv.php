@@ -4,7 +4,6 @@ namespace Bex\Behat\StepTimeLoggerExtension\Service\OutputPrinter;
 
 use Behat\Testwork\Output\Printer\ConsoleOutputPrinter;
 use Bex\Behat\StepTimeLoggerExtension\ServiceContainer\Config;
-use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
 
 class Csv implements OutputPrinterInterface
@@ -67,8 +66,6 @@ class Csv implements OutputPrinterInterface
     }
 
     /**
-     * @param string $fileName
-     *
      * @return string
      */
     private function getFilePath()

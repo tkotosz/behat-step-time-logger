@@ -15,13 +15,18 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 final class StepTimeLoggerListener implements EventSubscriberInterface
 {
     /**
+     * @var Config
+     */
+    private $config;
+
+    /**
      * @var StepTimeLogger
      */
     private $stepTimeLogger;
 
     /**
-     * @param StepTimeLogger         $stepTimeLogger
-     * @param OutputPrinterInterface $outputPrinter
+     * @param Config         $config
+     * @param StepTimeLogger $stepTimeLogger
      */
     public function __construct(Config $config, StepTimeLogger $stepTimeLogger)
     {
