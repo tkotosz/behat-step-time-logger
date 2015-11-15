@@ -8,7 +8,6 @@ use Behat\Behat\EventDispatcher\Event\StepTested;
 use Behat\Testwork\EventDispatcher\Event\AfterSuiteTested;
 use Behat\Testwork\EventDispatcher\Event\SuiteTested;
 use Bex\Behat\StepTimeLoggerExtension\ServiceContainer\Config;
-use Bex\Behat\StepTimeLoggerExtension\Service\OutputPrinter\OutputPrinterInterface;
 use Bex\Behat\StepTimeLoggerExtension\Service\StepTimeLogger;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
