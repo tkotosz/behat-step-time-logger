@@ -58,6 +58,7 @@ class FeatureContext implements Context, SnippetAcceptingContext
      */
     private function assertOutputContainsMessage($output, $message)
     {
+        echo 'Output of the second behat instance: ' . PHP_EOL . $output;
         if (mb_strpos($output, $message) === false) {
             throw new RuntimeException('Behat output did not contain the given message. Output: ' . PHP_EOL . $output);
         }
