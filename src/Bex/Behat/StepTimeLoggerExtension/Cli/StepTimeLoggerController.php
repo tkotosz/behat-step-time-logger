@@ -39,7 +39,6 @@ final class StepTimeLoggerController implements Controller
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        var_dump($input->getOptions());
         if ($input->getOption('log-step-times')) {
             $this->config->enableLogging();
         }
