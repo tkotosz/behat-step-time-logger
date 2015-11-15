@@ -29,51 +29,6 @@ Feature: Logging step times
       }
       """
 
-  Scenario: Print debug times to console
-    Given I have the configuration:
-      """
-      default:
-        extensions:
-          Bex\Behat\StepTimeLoggerExtension: ~
-      """
-    When I run Behat with "--log-step-times" parameter
-    Then I should see the step times on the console
-
-  Scenario: Print debug times to csv
-    Given I have the configuration:
-      """
-      default:
-        extensions:
-          Bex\Behat\StepTimeLoggerExtension:
-            output: csv
-      """
-    When I run Behat with "--log-step-times" parameter
-    Then I should see the message "Step time log has been saved. Open at %temp-dir%/steptimelogger/"
-
-  Scenario: Print debug times to csv to the configured folder
-    Given I have the configuration:
-      """
-      default:
-        extensions:
-          Bex\Behat\StepTimeLoggerExtension:
-            output: csv
-            output_directory: /tmp/testdirectory
-      """
-    When I run Behat with "--log-step-times" parameter
-    Then I should see the message "Step time log has been saved. Open at /tmp/testdirectory"
-
-  Scenario: Print debug times to csv and to console as well
-    Given I have the configuration:
-      """
-      default:
-        extensions:
-          Bex\Behat\StepTimeLoggerExtension:
-            output: [console, csv]
-      """
-    When I run Behat with "--log-step-times" parameter
-    Then I should see the step times on the console
-    And I should see the message "Step time log has been saved. Open at %temp-dir%/steptimelogger/"
-
   Scenario: Print debug times when the enabled_always config used
     Given I have the configuration:
       """

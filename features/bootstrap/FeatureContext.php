@@ -41,7 +41,6 @@ class FeatureContext implements Context, SnippetAcceptingContext
      */
     public function iShouldSeeTheStepTimesOnTheConsole()
     {
-       return true;
        $this->iShouldSeeTheMessage('| Average execution Time | Called count | Step name');
     }
 
