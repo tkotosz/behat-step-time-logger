@@ -20,7 +20,7 @@
     },
     "require-dev": {
         "phpspec/phpspec": "2.4.0-alpha2",
-        "bex/behat-test-runner": "dev-feature/add-parameter-support-for-secondary-behat",
+        "bex/behat-test-runner": "dev-master",
         "jakoch/phantomjs-installer": "^1.9.8",
         "behat/mink-selenium2-driver": "^1.3.0"
     },
