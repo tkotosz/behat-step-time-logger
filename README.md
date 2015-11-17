@@ -47,10 +47,10 @@ default:
 
 You can enable the logger to run every time even if you don't use the --log-step-times flag:
 ```yml
-ci:
+default:
   extensions:
     Bex\Behat\StepTimeLoggerExtension:
-      enabled_always: false
+      enabled_always: true
 ```
 
 You can configure the output directory of the csv printer as well:
