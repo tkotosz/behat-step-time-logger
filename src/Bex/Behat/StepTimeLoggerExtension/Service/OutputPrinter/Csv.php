@@ -2,8 +2,8 @@
 
 namespace Bex\Behat\StepTimeLoggerExtension\Service\OutputPrinter;
 
-use Behat\Testwork\Output\Printer\ConsoleOutputPrinter;
 use Bex\Behat\StepTimeLoggerExtension\ServiceContainer\Config;
+use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Filesystem\Filesystem;
 
 class Csv implements OutputPrinterInterface
@@ -16,7 +16,7 @@ class Csv implements OutputPrinterInterface
     private $outputDirectory;
 
     /**
-     * @var ConsoleOutputPrinter
+     * @var ConsoleOutput
      */
     private $output;
 
@@ -26,9 +26,9 @@ class Csv implements OutputPrinterInterface
     private $filesystem;
 
     /**
-     * @param ConsoleOutputPrinter $output
+     * @param ConsoleOutput $output
      */
-    public function __construct(ConsoleOutputPrinter $output, Filesystem $filesystem)
+    public function __construct(ConsoleOutput $output, Filesystem $filesystem)
     {
         $this->output = $output;
         $this->filesystem = $filesystem;

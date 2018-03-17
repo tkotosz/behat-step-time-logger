@@ -6,7 +6,6 @@
         <service id="bex.step_time_logger_extension.config" class="Bex\Behat\StepTimeLoggerExtension\ServiceContainer\Config" />
         <service id="bex.step_time_logger_extension.output_printer.current" class="Bex\Behat\StepTimeLoggerExtension\Service\OutputPrinter\Console" />
 
-        <service id="bex.step_time_logger_extension.behat_console" class="Behat\Testwork\Output\Printer\ConsoleOutputPrinter" />
         <service id="bex.step_time_logger_extension.filesystem" class="Symfony\Component\Filesystem\Filesystem" />
         <service id="bex.step_time_logger_extension.step_time_logger" class="Bex\Behat\StepTimeLoggerExtension\Service\StepTimeLogger" />
 
@@ -23,9 +22,11 @@
         </service>
         
         <!-- output printers -->
-        <service id="bex.step_time_logger_extension.output_printer.console" class="Bex\Behat\StepTimeLoggerExtension\Service\OutputPrinter\Console" />
+        <service id="bex.step_time_logger_extension.output_printer.console" class="Bex\Behat\StepTimeLoggerExtension\Service\OutputPrinter\Console">
+            <argument type="service" id="cli.output" />
+        </service>
         <service id="bex.step_time_logger_extension.output_printer.csv" class="Bex\Behat\StepTimeLoggerExtension\Service\OutputPrinter\Csv">
-            <argument type="service" id="bex.step_time_logger_extension.behat_console" />
+            <argument type="service" id="cli.output" />
             <argument type="service" id="bex.step_time_logger_extension.filesystem" />
         </service>
     </services>
