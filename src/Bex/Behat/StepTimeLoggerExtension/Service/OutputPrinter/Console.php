@@ -9,6 +9,19 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 class Console implements OutputPrinterInterface
 {
     /**
+     * @var ConsoleOutput
+     */
+    private $output;
+    
+    /**
+     * @param ConsoleOutput $output
+     */
+    public function __construct(ConsoleOutput $output)
+    {
+        $this->output = $output;
+    }
+    
+    /**
      * @param Config $config
      */
     public function configure(Config $config)
@@ -24,7 +37,7 @@ class Console implements OutputPrinterInterface
      */
     public function printLogs(array $calledCounts, array $avgTimes)
     {
-        $table = new Table(new ConsoleOutput());
+        $table = new Table($this->output);
         $table->setHeaders(['Average execution Time', 'Called count', 'Step name']);
         foreach ($avgTimes as $stepName => $time) {
             $table->addRow([$time, $calledCounts[$stepName], $stepName]);
