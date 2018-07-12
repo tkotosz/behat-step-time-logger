@@ -20,12 +20,12 @@
             <argument type="service" id="bex.step_time_logger_extension.config" />
             <argument type="service" id="bex.step_time_logger_extension.step_time_logger" />
         </service>
-        
+
         <!-- output printers -->
-        <service id="bex.step_time_logger_extension.output_printer.console" class="Bex\Behat\StepTimeLoggerExtension\Service\OutputPrinter\Console">
+        <service id="bex.step_time_logger_extension.output_printer.console" class="Bex\Behat\StepTimeLoggerExtension\Service\OutputPrinter\Console" public="true">
             <argument type="service" id="cli.output" />
         </service>
-        <service id="bex.step_time_logger_extension.output_printer.csv" class="Bex\Behat\StepTimeLoggerExtension\Service\OutputPrinter\Csv">
+        <service id="bex.step_time_logger_extension.output_printer.csv" class="Bex\Behat\StepTimeLoggerExtension\Service\OutputPrinter\Csv" public="true">
             <argument type="service" id="cli.output" />
             <argument type="service" id="bex.step_time_logger_extension.filesystem" />
         </service>
