@@ -53,6 +53,10 @@ class Csv implements OutputPrinterInterface
         $this->filesystem->dumpFile($filePath, '');
         $file = fopen($filePath, 'w');
 
+        if ($file === false) {
+            throw new \InvalidArgumentException(sprintf('Cannot open %s for writting', $filePath));
+        }
+
         fputcsv($file, ['Average execution Time', 'Called count', 'Total Cost', 'Step name']);
 
         foreach ($avgTimes as $stepName => $info) {
