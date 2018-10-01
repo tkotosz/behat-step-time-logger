@@ -12,7 +12,7 @@ class Console implements OutputPrinterInterface
      * @var ConsoleOutput
      */
     private $output;
-    
+
     /**
      * @param ConsoleOutput $output
      */
@@ -20,7 +20,7 @@ class Console implements OutputPrinterInterface
     {
         $this->output = $output;
     }
-    
+
     /**
      * @param Config $config
      */
@@ -30,17 +30,16 @@ class Console implements OutputPrinterInterface
     }
 
     /**
-     * @param  array $calledCounts
-     * @param  array $avgTimes
+     * @param \Generator $avgTimes
      *
      * @return void
      */
-    public function printLogs(array $calledCounts, array $avgTimes)
+    public function printLogs(\Generator $avgTimes)
     {
         $table = new Table($this->output);
-        $table->setHeaders(['Average execution Time', 'Called count', 'Step name']);
-        foreach ($avgTimes as $stepName => $time) {
-            $table->addRow([$time, $calledCounts[$stepName], $stepName]);
+        $table->setHeaders(['Average execution Time', 'Called count', 'Total Cost', 'Step name']);
+        foreach ($avgTimes as $stepName => $info) {
+            $table->addRow([$info['avg_execution_time'], $info['total_executions'], $info['total_cost'], $stepName]);
         }
         $table->render();
     }

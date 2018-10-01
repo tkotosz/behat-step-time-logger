@@ -71,13 +71,11 @@ final class StepTimeLoggerListener implements EventSubscriberInterface
     public function suiteFinished()
     {
         if ($this->config->isEnabled()) {
-            $calledCounts = $this->stepTimeLogger->getCalledCounts();
-            $avgTimes = $this->stepTimeLogger->getAvegrageExecutionTimes();
-            $this->stepTimeLogger->clearLogs();
-
             foreach ($this->config->getOutputPrinters() as $printer) {
-                $printer->printLogs($calledCounts, $avgTimes);
+                $printer->printLogs($this->stepTimeLogger->executionInformationGenerator());
             }
+
+            $this->stepTimeLogger->clearLogs();
         }
     }
 }

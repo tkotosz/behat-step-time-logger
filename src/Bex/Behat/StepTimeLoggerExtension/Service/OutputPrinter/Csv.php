@@ -43,21 +43,20 @@ class Csv implements OutputPrinterInterface
     }
 
     /**
-     * @param  array $calledCounts
-     * @param  array $avgTimes
+     * @param \Generator $avgTimes
      *
      * @return void
      */
-    public function printLogs(array $calledCounts, array $avgTimes)
+    public function printLogs(\Generator $avgTimes)
     {
         $filePath = $this->getFilePath();
         $this->filesystem->dumpFile($filePath, '');
         $file = fopen($filePath, 'w');
 
-        fputcsv($file, ['Average execution Time', 'Called count', 'Step name']);
+        fputcsv($file, ['Average execution Time', 'Called count', 'Total Cost', 'Step name']);
 
-        foreach ($avgTimes as $stepName => $time) {
-            fputcsv($file, [$time, $calledCounts[$stepName], $stepName]);
+        foreach ($avgTimes as $stepName => $info) {
+            fputcsv($file, [$info['avg_execution_time'], $info['total_executions'], $info['total_cost'], $stepName]);
         }
 
         fclose($file);
@@ -75,5 +74,5 @@ class Csv implements OutputPrinterInterface
         return empty($path) ? $fileName : $path . DIRECTORY_SEPARATOR . $fileName;
     }
 
-    
+
 }
