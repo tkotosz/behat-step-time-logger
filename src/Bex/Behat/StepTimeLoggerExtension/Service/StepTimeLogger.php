@@ -4,6 +4,8 @@ namespace Bex\Behat\StepTimeLoggerExtension\Service;
 
 class StepTimeLogger
 {
+    public const TOTAL_TIME = 'totalTime';
+
     /**
      * @var float
      */
@@ -59,9 +61,11 @@ class StepTimeLogger
     public function getAvegrageExecutionTimes()
     {
         $avgTimes = [];
-
+        $avgTimes['totalTime'] = 0;
         foreach ($this->executionTimes as $stepName => $executionTimes) {
             $avgTimes[$stepName] = array_sum($executionTimes) / count($executionTimes);
+            $avgTimes[$stepName] = round($avgTimes[$stepName], 2);
+            $avgTimes[self::TOTAL_TIME] += $avgTimes[$stepName];
         }
 
         arsort($avgTimes);

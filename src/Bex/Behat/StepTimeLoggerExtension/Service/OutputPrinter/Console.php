@@ -2,6 +2,7 @@
 
 namespace Bex\Behat\StepTimeLoggerExtension\Service\OutputPrinter;
 
+use Bex\Behat\StepTimeLoggerExtension\Service\StepTimeLogger;
 use Bex\Behat\StepTimeLoggerExtension\ServiceContainer\Config;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -12,7 +13,7 @@ class Console implements OutputPrinterInterface
      * @var ConsoleOutput
      */
     private $output;
-    
+
     /**
      * @param ConsoleOutput $output
      */
@@ -20,7 +21,7 @@ class Console implements OutputPrinterInterface
     {
         $this->output = $output;
     }
-    
+
     /**
      * @param Config $config
      */
@@ -40,7 +41,12 @@ class Console implements OutputPrinterInterface
         $table = new Table($this->output);
         $table->setHeaders(['Average execution Time', 'Called count', 'Step name']);
         foreach ($avgTimes as $stepName => $time) {
-            $table->addRow([$time, $calledCounts[$stepName], $stepName]);
+            if (StepTimeLogger::TOTAL_TIME == $stepName) {
+                $table->addRow([$time, 1, $stepName]);
+
+            } else {
+                $table->addRow([$time, $calledCounts[$stepName], $stepName]);
+            }
         }
         $table->render();
     }
