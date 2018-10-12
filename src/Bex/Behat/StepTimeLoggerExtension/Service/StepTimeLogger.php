@@ -65,7 +65,24 @@ class StepTimeLogger
         }
 
         arsort($avgTimes);
-        
+
         return $avgTimes;
-    }    
+    }
+
+    /**
+     * @return \Generator
+     */
+    public function executionInformationGenerator()
+    {
+        foreach ($this->executionTimes as $stepName => $executionTimes) {
+            $totalExecutions = count($executionTimes);
+            $avgExecutionTime = round(array_sum($executionTimes) / $totalExecutions, 5);
+
+            yield $stepName => [
+                'avg_execution_time' => $avgExecutionTime,
+                'total_executions' => $totalExecutions,
+                'total_cost' => $avgExecutionTime * $totalExecutions
+            ];
+        }
+    }
 }

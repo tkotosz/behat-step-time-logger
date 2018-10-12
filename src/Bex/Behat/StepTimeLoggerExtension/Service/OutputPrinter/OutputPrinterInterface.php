@@ -14,10 +14,9 @@ interface OutputPrinterInterface
     public function configure(Config $config);
 
     /**
-     * @param  array $calledCounts
-     * @param  array $avgTimes
+     * @param \Generator $avgTimes
      *
      * @return void
      */
-    public function printLogs(array $calledCounts, array $avgTimes);
+    public function printLogs(\Generator $avgTimes);
 }

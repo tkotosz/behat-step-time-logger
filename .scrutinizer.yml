@@ -28,23 +28,30 @@ filter:
 build:
     environment:
         php:
-            version: 5.4
+            version: 5.5
             ini:
                 'always_populate_raw_post_data': '-1'
 
-    tests:
-        override:
-            - bin/phpspec run --no-interaction --format=pretty
-            - bin/behat --no-interaction --no-snippets --stop-on-failure --format=pretty
-        after:
-            - SCRUTINIZER_START_TIME=$(cat /tmp/build-start-time.txt) sh -c 'curl -sS https://gist.githubusercontent.com/tonypiper/fd3cf9a67b71d4e3928c/raw/152f1d873f98ff4256ca8bc3041443eae7c890b4/keenio-logger.php | php'
+    nodes:
+        analysis:
+            tests:
+                override:
+                - php-scrutinizer-run
 
-    dependencies:
-        before:
-            - date -u +"%Y-%m-%dT%H:%M:%SZ" > /tmp/build-start-time.txt
+        tests-and-coverage:
+            tests:
+                override:
+                    - bin/phpspec run --no-interaction --format=pretty
+                    - bin/behat --no-interaction --no-snippets --stop-on-failure --format=pretty
+                after:
+                    - SCRUTINIZER_START_TIME=$(cat /tmp/build-start-time.txt) sh -c 'curl -sS https://gist.githubusercontent.com/tonypiper/fd3cf9a67b71d4e3928c/raw/152f1d873f98ff4256ca8bc3041443eae7c890b4/keenio-logger.php | php'
 
-        override:
-            - { command: 'composer update --no-interaction --prefer-source', idle_timeout: 600 }
+            dependencies:
+                before:
+                    - date -u +"%Y-%m-%dT%H:%M:%SZ" > /tmp/build-start-time.txt
+
+                override:
+                    - { command: 'composer update --no-interaction --prefer-source', idle_timeout: 600 }
 
     cache:
         directories: [ vendor/, bin/ ]
